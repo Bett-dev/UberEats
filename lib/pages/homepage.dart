@@ -10,6 +10,26 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text('This will be the ome page')));
+    return Scaffold(
+      body: SafeArea(
+        child: Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'Your Location',
+                      style: TextStyle(color: Colors.black45, fontSize: 16),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
