@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:urban_eats/pages/main_page.dart';
 import 'package:urban_eats/pages/onboarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:urban_eats/provider/cart_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final bool hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
 
-  runApp(UberEats(hasSeenOnboarding: hasSeenOnboarding));
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => CartProvider())],
+      child: UberEats(hasSeenOnboarding: hasSeenOnboarding),
+    ),
+  );
 }
 
 class UberEats extends StatelessWidget {
