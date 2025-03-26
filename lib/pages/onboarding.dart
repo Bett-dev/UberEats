@@ -69,8 +69,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           // Navigation button
           Positioned(
             bottom: 30,
+            left: 20,
+            right: 20,
             child: SizedBox(
               height: 75,
+
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: MaterialButton(
@@ -88,7 +91,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  minWidth: MediaQuery.of(context).size.width - 40,
+
                   child: Text(
                     currentIndex == onboards.length - 1
                         ? "Get Started"
@@ -106,7 +109,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _goToHome(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
-    // await prefs.setBool('hasSeenOnboarding', true);
+    await prefs.setBool('hasSeenOnboarding', true);
 
     if (context.mounted) {
       Navigator.of(
