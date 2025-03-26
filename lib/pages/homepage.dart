@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:urban_eats/constants/const.dart';
 import 'package:urban_eats/models/category.dart';
 import 'package:urban_eats/models/products.dart';
+import 'package:urban_eats/pages/cartpage.dart';
+import 'package:urban_eats/provider/cart_provider.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -25,10 +28,9 @@ class _HomepageState extends State<Homepage> {
         .toList();
   }
 
-  List<MyProductModel> myCatProducts = [];
-
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       backgroundColor: kBgColor,
       body: SafeArea(
@@ -91,18 +93,28 @@ class _HomepageState extends State<Homepage> {
                       Stack(
                         clipBehavior: Clip.none,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black12),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Icon(
-                              Icons.shopping_cart_outlined,
-                              color: Colors.black,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CartPage(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black12),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Icon(
+                                Icons.shopping_cart_outlined,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
-                          if (myCatProducts.isNotEmpty)
+                          if (cartProvider.cartCount > 0)
                             Positioned(
                               top: -5, // Adjust position to be inside container
                               right: -5,
@@ -119,7 +131,7 @@ class _HomepageState extends State<Homepage> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    myCatProducts.length.toString(),
+                                    cartProvider.cartCount.toString(),
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
@@ -412,9 +424,11 @@ class _HomepageState extends State<Homepage> {
                                                           ),
                                                       decoration: BoxDecoration(
                                                         color:
-                                                            myCatProducts.contains(
-                                                                  filteredProducts[index],
-                                                                )
+                                                            cartProvider
+                                                                    .cartItems
+                                                                    .contains(
+                                                                      filteredProducts[index],
+                                                                    )
                                                                 ? Colors.black
                                                                 : Colors
                                                                     .black45,
@@ -426,21 +440,19 @@ class _HomepageState extends State<Homepage> {
                                                       ),
                                                       child: GestureDetector(
                                                         onTap: () {
-                                                          if (myCatProducts
+                                                          if (cartProvider
+                                                              .cartItems
                                                               .contains(
                                                                 filteredProducts[index],
                                                               )) {
-                                                            setState(() {
-                                                              myCatProducts.remove(
-                                                                filteredProducts[index],
-                                                              );
-                                                            });
+                                                            cartProvider
+                                                                .removeFromCat(
+                                                                  filteredProducts[index],
+                                                                );
                                                           } else {
-                                                            setState(() {
-                                                              myCatProducts.add(
-                                                                filteredProducts[index],
-                                                              );
-                                                            });
+                                                            cartProvider.addToCat(
+                                                              filteredProducts[index],
+                                                            );
                                                           }
                                                         },
                                                         child: Icon(

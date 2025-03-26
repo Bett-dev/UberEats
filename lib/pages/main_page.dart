@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:urban_eats/constants/const.dart';
+import 'package:urban_eats/pages/cartpage.dart';
 import 'package:urban_eats/pages/homepage.dart';
 
 class MainPage extends StatefulWidget {
@@ -15,7 +16,7 @@ class _MainPageState extends State<MainPage> {
   final List<Widget> screens = [
     Homepage(),
     Center(child: Text('Messages Page', style: TextStyle(fontSize: 24))),
-    Center(child: Text('Explore Page', style: TextStyle(fontSize: 24))),
+    CartPage(),
     Center(child: Text('Profile Page', style: TextStyle(fontSize: 24))),
   ];
   @override

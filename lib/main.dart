@@ -13,7 +13,11 @@ void main() async {
 
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => CartProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => CartProvider()),
+        // ChangeNotifierProvider(create: (context) => CartProvider()),
+      ],
+
       child: UberEats(hasSeenOnboarding: hasSeenOnboarding),
     ),
   );
